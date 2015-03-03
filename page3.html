@@ -1,0 +1,338 @@
+<!-- page3.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>How-To Guide</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function(){
+    $(".scroll-area").scrollspy({target: "#myNavbar"}) 
+	});
+</script>
+<style type="text/css">
+.scroll-area {
+	height: 250px;
+	position: relative;
+	overflow: auto;
+}
+</style>
+<style>
+li {
+    margin-bottom: 10px;
+}
+pre {
+	color: FireBrick;
+}
+</style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="jumbotron">
+    <h1>How-To Guide: <small>Ravelry API</small></h1>   
+    <h2><small>by Becky Solomon</small></h2>  
+  </div>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="page1.html">Getting Started</a></li>
+        <li><a href="page2.html">Establishing a Connection</a></li> 
+        <li class="active"><a href="page3.html">Using the Data</a></li> 
+        <li><a href="page4.html">Advanced</a></li> 
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</div> 
+
+	<div class="row">
+	<div class='col-md-8 col-md-offset-1'>
+      <h2>Step 3: Using the data with GET requests</h2>
+      <p>Now that we've established a connection with the Ravelry server, we can get to the interesting part: using the data. Since the <a href="http://www.ravelry.com/api">Ravelry API documentation</a></p> shows all the possible methods available, we will just look at a few examples here.</p>
+      <p>Let's start with something simple. Say you wanted to retrieve all of the possible yarn weights on Ravelry. If you search the documentation for "yarn weight", you'll get this entry: </p>
+      <div><img src='imgs/yarn_weights.png'></div>
+      <p>So, using our function <code>get_url()</code> from the previous section, our <code>$url</code> parameter is <code>'https://api.ravelry.com/yarn_weights.json'</code>. With the following code,</p>
+      <pre>
+$yarnWeights = get_url('https://api.ravelry.com/yarn_weights.json',$username,$password);
+show($yarnWeights);
+	</pre>
+	<p>We get this output:</p>
+    <div class="scroll-area" data-spy="scroll" data-offset="0">
+    <pre>
+array(1) {
+  ["yarn_weights"]=>
+  array(12) {
+    [0]=>
+    array(8) {
+      ["name"]=>
+      string(4) "Aran"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(1) "8"
+      ["id"]=>
+      int(1)
+      ["crochet_gauge"]=>
+      string(0) ""
+      ["ply"]=>
+      string(2) "10"
+      ["knit_gauge"]=>
+      string(2) "18"
+      ["max_gauge"]=>
+      NULL
+    }
+    [1]=>
+    array(8) {
+      ["name"]=>
+      string(5) "Bulky"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(1) "7"
+      ["id"]=>
+      int(4)
+      ["crochet_gauge"]=>
+      string(0) ""
+      ["ply"]=>
+      string(2) "12"
+      ["knit_gauge"]=>
+      string(5) "14-15"
+      ["max_gauge"]=>
+      NULL
+    }
+    [2]=>
+    array(8) {
+      ["name"]=>
+      string(9) "Fingering"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(2) "14"
+      ["id"]=>
+      int(5)
+      ["crochet_gauge"]=>
+      string(0) ""
+      ["ply"]=>
+      string(1) "4"
+      ["knit_gauge"]=>
+      string(2) "28"
+      ["max_gauge"]=>
+      NULL
+    }
+    [3]=>
+    array(8) {
+      ["name"]=>
+      string(11) "Super Bulky"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(3) "5-6"
+      ["id"]=>
+      int(6)
+      ["crochet_gauge"]=>
+      string(0) ""
+      ["ply"]=>
+      NULL
+      ["knit_gauge"]=>
+      string(4) "8-12"
+      ["max_gauge"]=>
+      NULL
+    }
+    [4]=>
+    array(8) {
+      ["name"]=>
+      string(4) "Lace"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      NULL
+      ["id"]=>
+      int(7)
+      ["crochet_gauge"]=>
+      string(0) ""
+      ["ply"]=>
+      string(1) "2"
+      ["knit_gauge"]=>
+      string(5) "32-34"
+      ["max_gauge"]=>
+      NULL
+    }
+    [5]=>
+    array(8) {
+      ["name"]=>
+      string(6) "Cobweb"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      NULL
+      ["id"]=>
+      int(8)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      string(1) "1"
+      ["knit_gauge"]=>
+      NULL
+      ["max_gauge"]=>
+      NULL
+    }
+    [6]=>
+    array(8) {
+      ["name"]=>
+      string(6) "Thread"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      NULL
+      ["id"]=>
+      int(9)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      NULL
+      ["knit_gauge"]=>
+      NULL
+      ["max_gauge"]=>
+      NULL
+    }
+    [7]=>
+    array(8) {
+      ["name"]=>
+      string(5) "Sport"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(2) "12"
+      ["id"]=>
+      int(10)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      string(1) "5"
+      ["knit_gauge"]=>
+      string(5) "24-26"
+      ["max_gauge"]=>
+      NULL
+    }
+    [8]=>
+    array(8) {
+      ["name"]=>
+      string(2) "DK"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(2) "11"
+      ["id"]=>
+      int(11)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      string(1) "8"
+      ["knit_gauge"]=>
+      string(2) "22"
+      ["max_gauge"]=>
+      NULL
+    }
+    [9]=>
+    array(8) {
+      ["name"]=>
+      string(7) "Worsted"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      string(1) "9"
+      ["id"]=>
+      int(12)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      string(2) "10"
+      ["knit_gauge"]=>
+      string(2) "20"
+      ["max_gauge"]=>
+      NULL
+    }
+    [10]=>
+    array(8) {
+      ["name"]=>
+      string(15) "Light Fingering"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      NULL
+      ["id"]=>
+      int(13)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      string(1) "3"
+      ["knit_gauge"]=>
+      string(2) "32"
+      ["max_gauge"]=>
+      NULL
+    }
+    [11]=>
+    array(8) {
+      ["name"]=>
+      string(9) "Any gauge"
+      ["min_gauge"]=>
+      NULL
+      ["wpi"]=>
+      NULL
+      ["id"]=>
+      int(15)
+      ["crochet_gauge"]=>
+      NULL
+      ["ply"]=>
+      NULL
+      ["knit_gauge"]=>
+      NULL
+      ["max_gauge"]=>
+      NULL
+    }
+  }
+}
+</pre>
+    </div>
+    <p>As you can see, we have an array of arrays of arrays. There is one outer array containing the entire list of yarns. Each element in the outermost array is an array that holds information about a type of yarn. Let's look at the first element of the array:</p>
+    <pre>
+      ["name"]=> string(4) "Aran"
+      ["min_gauge"]=> NULL
+      ["wpi"]=> string(1) "8"
+      ["id"]=> int(1)
+      ["crochet_gauge"]=> string(0) ""
+      ["ply"]=> string(2) "10"
+      ["knit_gauge"]=> string(2) "18"
+      ["max_gauge"]=> NULL
+    </pre>
+	<p>There's a lot of information here-- everything you could want to know about each type of yarn. But let's say that all we want to do is output to the screen all the <strong>names </strong> of yarns. To do that, we need to loop through the array of yarns and pull out the first element of each yarn array:</p>
+	<pre>
+&lt?php
+	echo "Yarn weights: ";
+	foreach($response as $yarnlist){
+    	foreach($yarnlist as $yarn){
+    			print($yarn['name']);
+    			print (", ");
+    	}
+    }
+?&gt
+	</pre>
+	<p>Which gives us the following output:</p>
+	<pre>Yarn weights: Aran, Bulky, Fingering, Super Bulky, Lace, Cobweb, Thread, Sport, DK, Worsted, Light Fingering, Any gauge,</pre>
+	<p>Now you have the tools to get lots of information from Ravelry and parse out the information that you care about. Data can be similarly parsed for most of the JSON objects returned by the Ravelry API (e.g. color_families.json, current_user.json)</p>
+	<div class="container">                  
+  		<ul class="pager">
+    		<li class="previous"><a href="page2.html">Previous</a></li>
+			<li class="next"><a href="page4.html>Next</a></li>    		
+  		</ul>
+	</div>
+</body>
+</html>

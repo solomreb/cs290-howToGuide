@@ -1,0 +1,94 @@
+<!-- page4.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>How-To Guide</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function(){
+    $(".scroll-area").scrollspy({target: "#myNavbar"}) 
+	});
+</script>
+<style type="text/css">
+.scroll-area {
+	height: 250px;
+	position: relative;
+	overflow: auto;
+}
+</style>
+<style>
+li {
+    margin-bottom: 10px;
+}
+pre {
+	color: FireBrick;
+}
+</style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="jumbotron">
+    <h1>How-To Guide: <small>Ravelry API</small></h1>   
+	<h2><small>by Becky Solomon</small></h2>  
+  </div>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="page1.html">Getting Started</a></li>
+        <li><a href="page2.html">Establishing a Connection</a></li> 
+        <li><a href="page3.html">Using the Data</a></li> 
+        <li class="active"><a href="page4.html">Advanced</a></li> 
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</div> 
+
+	<div class="row">
+	<div class='col-md-8 col-md-offset-1'>
+      <h2>Step 4: More advanced requests</h2>
+      <p>It's nice to be able to retrieve data from the Ravelry, but what if you want to change or update some data? Say, for example, you want to add a comment to one of your knitting projects. Looking in the documentation, we find this:</p>
+      <div><img src="imgs/createComment.png"></div>      
+      <p>This is where those POST requests come in! We are going to go back to our<code>get_url()</code> function and change it so that it can 1) make a POST request, and 2) send the necessary header parameters. The following function will add the comment "Cool hat!" to a project on my (rebebe's) project list:
+      
+      <pre>    
+function get_url($url, $user, $password) {
+	$data=array(type=>project, commented_id=>'1967047', body=>'Cool hat!');
+	$opts = array(
+	  'http'=>array(
+		'method'=>"POST",
+		'header' => "Authorization: Basic " . base64_encode("$user:$password") ,
+		'content' => http_build_query($data)               
+	  )
+	);
+
+	$context = stream_context_create($opts);
+
+	// Open the file using the HTTP headers set above
+	$file = file_get_contents($url, false, $context);
+	$response = json_decode($file, true);
+	return $response;
+}
+      </pre>
+      <p>Some of the parameters for the $data array can be tricky to find. For commented_id, I had to run a GET request to list all of my projects and then search for the name of the project. Once I found it, I pulled (id) as the commented_id.
+      If we run this code using $url= 'https://api.ravelry.com/comments/create.json', this happens:</p>
+      <p><img src='imgs/clocheComment'></p>
+      <br>
+      <p>As you can see from the documentation, there are lots of other things you can do with the API, and now you should have all the tools you need to explore them! Thanks for visiting.
+	<div class="container">                  
+  		<ul class="pager">
+    		<li class="previous"><a href="page3.html">Previous</a></li>
+  		</ul>
+	</div>
+</body>
+</html>
+  

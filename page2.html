@@ -1,0 +1,102 @@
+<!-- page2.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>How-To Guide</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<style>
+li {
+    margin-bottom: 10px;
+}
+
+</style>
+</head>
+<body>
+  
+<div class="container">
+  <div class="jumbotron">
+    <h1>How-To Guide: <small>Ravelry API</small></h1>   
+    <h2><small>by Becky Solomon</small></h2>  
+  </div>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="page1.html">Getting Started</a></li>
+        <li class="active"><a href="page2.html">Establishing a Connection</a></li> 
+        <li><a href="page3.html">Using the Data</a></li> 
+        <li><a href="page4.html">Advanced</a></li> 
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</div> 
+
+	<div class="row">
+	<div class='col-md-8 col-md-offset-1'>
+      <h2>Step 2: Establishing a Connection</h2>
+      <p>The <a href="http://www.ravelry.com/api">Ravelry API Documentation Page</a> lists all of the methods that are currently available as well as information about the different possible result objects</p>
+      <p>You can interact with the Ravelry API using  <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html"> http request methods</a> GET and POST, depending on the method. In general, GET is used for retrieving data (for example, searching for projects) while POST is used for sending, changing or adding data (for example, creating a project). For more information on request methods. The API documentation tells you when to use which method.</p>
+      <p> The following php code is a simple function to establish a connection with the Ravelry API: <br>
+      
+      <pre>
+&lt?php
+  function get_url($url, $user, $password) {
+  // Create a stream
+	$opts = array(
+		'http'=>array(
+			'method'=>"GET",
+			'header' => "Authorization: Basic " . base64_encode("$user:$password"))
+	);
+
+	$context = stream_context_create($opts);
+
+	// Open the file using the HTTP headers set above
+	$file = file_get_contents($url, false, $context);
+	$response = json_decode($file, true);
+	return $response;
+}
+?&gt
+    </pre>
+      </p>
+      <p>First, we create an array of parameters that we will pass to the server as a stream context. You can read more about streams <a href="http://php.net/manual/en/intro.stream.php">here</a>.</p> 
+      <p>In order authenticate with Ravelry using HTTP Basic Auth, you need to have your login credentials that you obtained in Step 1. For <code>$user</code> and <code>$password</code>, you will use your <strong>Access Key</strong> and your <strong>Personal Key</strong> respectively. <code>$url </code> will vary depending on what data you are looking for. We'll get into this more in a second. </p>
+      <p>Once we've sent the request to the server, the response will be a JSON object put in the variable <code>$context</code>. To display that JSON, we use <code>file_get_contents</code>, which <a href="http://php.net/manual/en/function.file-get-contents.php">reads the entire file/object into a string</a>.</p>
+      <p>If you were to output <code>$file</code> without first using <code>json_decode</code>, you would get a long string of data that is very difficult to read.</p>
+      <p>Here's a function to output the content in an easier-to-read format:</p>
+      <pre>
+&lt?php
+function show($response) {
+
+	// Based off comment on http://php.net/manual/en/function.var-dump.php
+	echo '&ltpre&gt'; 
+	ob_start();
+	var_dump($response);
+	$a=ob_get_contents();
+	ob_end_clean();
+	echo htmlspecialchars($a,ENT_QUOTES); // Escape every HTML special chars 
+	echo '&lt/pre&gt';
+}
+
+?&gt
+      </pre>
+    </div>
+    </div>
+    
+
+	<div class="container">                  
+  		<ul class="pager">
+    		<li class="previous"><a href="page1.html">Previous</a></li>
+    		<li class="next"><a href="page3.html">Next</a></li>
+  		</ul>
+	</div>
+</body>
+</html>
